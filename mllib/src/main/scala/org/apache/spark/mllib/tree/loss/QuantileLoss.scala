@@ -25,7 +25,7 @@ import org.apache.spark.mllib.tree.model.TreeEnsembleModel
 object QuantileLoss extends Loss {
 
   //TO DO: Needs to be passed as a parameter
-  val t = 0.6
+  var t = 0.6
 
   /**
     * Method to calculate the gradients for the gradient boosting calculation for Quantile loss error calculation
@@ -43,6 +43,13 @@ object QuantileLoss extends Loss {
 
   override private[mllib] def computeError(prediction: Double, label: Double): Double = {
     if(label - prediction > 0) (1-t)*(label - prediction) else  t*(prediction - label)
+  }
 
+  def getQuantileParameter :Double = {
+    this.t
+  }
+  
+  def setQuantileParameter(quantile: Double) = {
+    this.t= quantile
   }
 }
